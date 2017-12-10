@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+  rsyslog:
+    build:
+      context: extensions/rsyslog
+    volumes:
+      - ./extensions/rsyslog/config/rsyslog.conf:/etc/rsyslog.conf:ro
+      - ./extensions/rsyslog/config/rsyslog.d:/etc/rsyslog.d:ro
+      - ./extensions/rsyslog/logs:/var/log
+    ports:
+      - "514:514"
+    networks:
+      - elk
+    depends_on:
+      - logstash
+    restart: on-failure
